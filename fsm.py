@@ -33,7 +33,7 @@ class TocMachine(GraphMachine):
                 flag = True
                 break   
             
-
+        
         return flag
 
     def is_going_to_meme(self, event):
@@ -43,10 +43,10 @@ class TocMachine(GraphMachine):
     def on_enter_starburst(self, event):
         print("I'm entering state1")
 
-        reply_token = event.reply_token
-        send_text_message(reply_token, "化成\n" + event.message.text + "\n我都認得")
-        send_text_message(reply_token, "吃噓")
-        send_image_url(reply_token, 'https://imgur.com/eYnSVP8')
+        id = event.source.user_id
+        send_text_message(id, "化成\n" + event.message.text + "\n我都認得")
+        send_text_message(id, "吃噓")
+        send_image_url(id, 'https://imgur.com/eYnSVP8.png')
         
         self.go_back()
 
