@@ -7,7 +7,7 @@ class TocMachine(GraphMachine):
     def __init__(self, **machine_configs):
         self.machine = GraphMachine(model=self, **machine_configs)
 
-    def is_going_to_state1(self, event):
+    def is_going_to_starburst(self, event):
         text = event.message.text
         flag = False
         starburst_list = ["starburst", "星爆", "猩抱", "星爆氣流斬", "星光連流擊", "10 16", "星光流連擊", "撐10秒", "撐十秒", "十秒十六連擊"/
