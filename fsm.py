@@ -44,7 +44,8 @@ class TocMachine(GraphMachine):
         print("I'm entering state1")
 
         reply_token = event.reply_token
-        send_text_message(reply_token, "Trigger state1")
+        send_text_message(reply_token, "化成\n" + event.message.text + "\n我都認得")
+        send_text_message(reply_token, "吃噓")
         self.go_back()
 
     def on_exit_starburst(self):
