@@ -16,20 +16,22 @@ class TocMachine(GraphMachine):
                         , "2022", "夜空之劍", "藍薔薇", "就憑你這菜b8，笑死", "nervgear", "微笑棺木", "晶彥", "希茲克利夫", "嗨呀庫", "川原礫"
                         , "我不能說", "切換", "化成", "潛行者" , "獨行", "兩把刀"]
 
-        if (text.lower().find('10') or text.lower().find('十')) and (text.lower().find('16') or text.lower().find('十六')):
+        if (text.lower().find('10')!=-1 or text.lower().find('十')!=-1) \
+            and (text.lower().find('16')!=-1 or text.lower().find('十六')!=-1):
             flag = True
             return flag
-        if (text.lower().find('blue') or text.lower().find('藍')) and (text.lower().find('black') or text.lower().find('黑')):
+        if (text.lower().find('blue')!=-1 or text.lower().find('藍')!=-1) \
+            and (text.lower().find('black')!=-1 or text.lower().find('黑')!=-1):
             flag = True
             return flag
-        if text.lower().find('化成') and text.lower().find('我都認得'):
+        if text.lower().find('化成')!=-1 and text.lower().find('我都認得')!=-1:
             flag = True
             return flag
-        if text.lower().find('sword') and text.lower().find('art'):
+        if text.lower().find('sword')!=-1 and text.lower().find('art')!=-1:
             flag = True
             return flag
         for word in starburst_list:
-            if text.lower().find(word):
+            if text.lower().find(word)!=-1:
                 flag = True
                 break   
             
