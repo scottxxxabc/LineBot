@@ -4,11 +4,10 @@ from utils import send_text_message
 
 
 class TocMachine(GraphMachine):
-
     def __init__(self, **machine_configs):
         self.machine = GraphMachine(model=self, **machine_configs)
 
-    def is_going_to_starburst(self, event):
+    def is_going_to_state1(self, event):
         text = event.message.text
         flag = False
         starburst_list = ["starburst", "星爆", "猩抱", "星爆氣流斬", "星光連流擊", "10 16", "星光流連擊", "撐10秒", "撐十秒", "十秒十六連擊"/
@@ -37,26 +36,26 @@ class TocMachine(GraphMachine):
 
         return flag
 
-    def is_going_to_coco(self, event):
+    def is_going_to_meme(self, event):
         text = event.message.text
-        return text.lower() == "go to state2"
+        return text.lower() == "go to meme"
 
     def on_enter_starburst(self, event):
         print("I'm entering state1")
 
         reply_token = event.reply_token
-        send_text_message(reply_token, "ㄘ噓")
+        send_text_message(reply_token, "Trigger state1")
         self.go_back()
 
-    def on_exit_state1(self):
+    def on_exit_starburst(self):
         print("Leaving state1")
 
-    def on_enter_state2(self, event):
+    def on_enter_meme(self, event):
         print("I'm entering state2")
 
         reply_token = event.reply_token
-        send_text_message(reply_token, "Trigger state2")
+        send_text_message(reply_token, "meme")
         self.go_back()
 
-    def on_exit_state2(self):
+    def on_exit_meme(self):
         print("Leaving state2")
