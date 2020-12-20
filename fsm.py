@@ -29,7 +29,7 @@ class TocMachine(GraphMachine):
             flag = True
             return flag
         for word in starburst_list:
-            if text.lower().find(word)
+            if text.lower().find(word):
                 flag = True
                 break   
             
