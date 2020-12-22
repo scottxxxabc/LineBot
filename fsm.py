@@ -8,7 +8,7 @@ class TocMachine(GraphMachine):
     def __init__(self, **machine_configs):
         self.machine = GraphMachine(model=self, **machine_configs)
         
-        with open("starburstword.txt",'r') as f:
+        with open("starburstword.txt",'r', encoding='UTF-8') as f:
             for word in f:
                 self.starburst_list.append(word.replace('\n', ''))
         print(self.starburst_list)
@@ -25,6 +25,9 @@ class TocMachine(GraphMachine):
         elif self.state == "wordmanage":
             text = event.message.text
             if text == exit:
+                with open("starburstword.txt",'w', encoding='UTF-8') as f:
+                    for word in self.starburst_list:
+                        f.write(word + '\n')
                 self.manage_end(event)
                 return
             str = (text.split('\n', 1))[0].split(' ', 1)
@@ -47,7 +50,7 @@ class TocMachine(GraphMachine):
 
     def add_to_list(self, str, event):
         self.starburst_list.append(str)
-        with open("starburstword.txt",'a') as f:
+        with open("starburstword.txt",'a', encoding='UTF-8') as f:
             f.write(str + '\n')
         send_text_message(event.source.user_id, str + ' 已加入星爆關鍵字列表!')
 
@@ -56,7 +59,7 @@ class TocMachine(GraphMachine):
             if str != '':
                 self.starburst_list.remove(str)
                 send_text_message(event.source.user_id, str + ' 已從星爆關鍵字列表移除!')
-                with open("starburstword.txt",'w') as f:
+                with open("starburstword.txt",'w', encoding='UTF-8') as f:
                     for word in self.starburst_list:
                         f.write(word + '\n')
         else:
