@@ -7,7 +7,7 @@ class TocMachine(GraphMachine):
     def __init__(self, **machine_configs):
         self.machine = GraphMachine(model=self, **machine_configs)
     
-    def test(event):
+    def test(self, event):
         if self.state == "user":
             self.advance(event)
 
