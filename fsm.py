@@ -18,13 +18,14 @@ class TocMachine(GraphMachine):
         if self.state == "user":
             self.advance(event)
         elif self.state == "starburstpolice":
-            if event.message.text == "exit":
+            if event.message.text.lower() == "exit":
+                send_text_message(event.source.user_id, "您已離開星爆文字獄")
                 self.check_end(event)
             else:
                 self.check(event)
         elif self.state == "wordmanage":
             text = event.message.text
-            if text == exit:
+            if text.lower() == 'exit':
                 with open("starburstword.txt",'w', encoding='UTF-8') as f:
                     for word in self.starburst_list:
                         f.write(word + '\n')
@@ -32,17 +33,17 @@ class TocMachine(GraphMachine):
                 return
             str = (text.split('\n', 1))[0].split(' ', 1)
 
-            if str[0] == 'add' and len(str) > 1:
+            if str[0].lower() == 'add' and len(str) > 1:
                 if str[1] != '':
                     self.add_to_list(str[1], event)
                     return
-            elif str[0] == 'rm' and len(str) > 1:
+            elif str[0].lower() == 'rm' and len(str) > 1:
                 self.rm(str[1], event)
                 return
-            elif str[0] == 'list':
+            elif str[0].lower() == 'list':
                 self.list(event)
                 return
-            elif str[0] == 'search' and len(str) > 1:
+            elif str[0].lower() == 'search' and len(str) > 1:
                 self.search(str[1], event)
                 return
             
