@@ -136,7 +136,7 @@ class TocMachine(GraphMachine):
         send_text_message(id, "吃噓")
         send_image_url(id, 'https://imgur.com/eYnSVP8.png')
         
-        self.check_end()
+        self.starburst_end()
 
 
     def is_going_to_meme(self, event):

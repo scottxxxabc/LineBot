@@ -35,6 +35,7 @@ machine = TocMachine(
             "conditions": "is_going_to_starburst",
         },
         {"trigger": "check_end", "source": "starburstpolice", "dest": "user"},
+        {"trigger": "starburst_end", "source": "starburst", "dest": "starburstpolice"},
         {"trigger": "manage_end", "source": "wordmanage", "dest": "user"},
         {
             "trigger": "advance",
