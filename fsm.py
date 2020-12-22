@@ -7,7 +7,6 @@ class TocMachine(GraphMachine):
     starburst_list = []
     def __init__(self, **machine_configs):
         self.machine = GraphMachine(model=self, **machine_configs)
-        
         with open("starburstword.txt",'r', encoding='UTF-8') as f:
             for word in f:
                 self.starburst_list.append(word.replace('\n', ''))
@@ -29,6 +28,7 @@ class TocMachine(GraphMachine):
                 with open("starburstword.txt",'w', encoding='UTF-8') as f:
                     for word in self.starburst_list:
                         f.write(word + '\n')
+                send_text_message(event.source.user_id, "您已結束星爆關鍵字管理")
                 self.manage_end(event)
                 return
             str = (text.split('\n', 1))[0].split(' ', 1)
@@ -60,9 +60,7 @@ class TocMachine(GraphMachine):
             if str != '':
                 self.starburst_list.remove(str)
                 send_text_message(event.source.user_id, str + ' 已從星爆關鍵字列表移除!')
-                with open("starburstword.txt",'w', encoding='UTF-8') as f:
-                    for word in self.starburst_list:
-                        f.write(word + '\n')
+                
         else:
             send_text_message(event.source.user_id, str + ' 不在星爆關鍵字列表中!')
 
@@ -93,6 +91,10 @@ class TocMachine(GraphMachine):
         text = event.message.text
         if  text.lower() == "0": 
             send_text_message(event.source.user_id, "進入星爆警察模式\n請輸入您想審查的文字開始您的星爆文字獄\n輸入 exit 結束審查")
+            self.starburst_list.clear()
+            with open("starburstword.txt",'r', encoding='UTF-8') as f:
+                for word in f:
+                    self.starburst_list.append(word.replace('\n', ''))
             return True
         else:
             return False
