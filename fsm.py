@@ -91,7 +91,7 @@ class TocMachine(GraphMachine):
     def is_going_to_starburstpolice(self, event):
         text = event.message.text
         if  text.lower() == "0": 
-            send_text_message(id, "進入星爆警察模式\n請輸入您想審查的文字開始您的星爆文字獄\n輸入 exit 結束審查")
+            send_text_message(event.source.user_id, "進入星爆警察模式\n請輸入您想審查的文字開始您的星爆文字獄\n輸入 exit 結束審查")
             return True
         else:
             return False
