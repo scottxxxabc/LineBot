@@ -28,7 +28,13 @@ machine = TocMachine(
             "dest": "meme",
             "conditions": "is_going_to_meme",
         },
-        {"trigger": "go_back", "source": ["starburst", "meme"], "dest": "user"},
+        {
+            "trigger": "advance",
+            "source": "user",
+            "dest": "help",
+            "conditions": "is_going_to_help",
+        },
+        {"trigger": "go_back", "source": ["starburst", "meme", "help"], "dest": "user"},
     ],
     initial="user",
     auto_transitions=False,
@@ -102,7 +108,8 @@ def webhook_handler():
             continue
         print(f"\nFSM STATE: {machine.state}")
         print(f"REQUEST BODY: \n{body}")
-        response = machine.advance(event)
+        
+        response = machine.test(event)
         if response == False:
             send_text_message(event.reply_token, "Not Entering any State")
 
