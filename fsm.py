@@ -83,7 +83,7 @@ class TocMachine(GraphMachine):
         return text.lower() == "help"
 
     def on_enter_help(self, event):
-        help_message = "歡迎使用星爆大師~\n這是一個可以幫助你找出正在偷星爆的星爆仔的好東西~\n\n輸入 0 以開始你的思想審查\n輸入 1 管理星爆關鍵字\n輸入 2 觀賞星爆圖"
+        help_message = "歡迎使用星爆大師~\n這是一個可以幫助你找出正在偷星爆的星爆仔的好東西~\n\n輸入 0 以開始你的思想審查\n輸入 1 管理星爆關鍵字\n輸入 2 觀賞星爆迷因"
         id = event.source.user_id
         send_text_message(id, help_message)
         self.go_back()
