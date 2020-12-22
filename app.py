@@ -14,14 +14,28 @@ load_dotenv()
 
 
 machine = TocMachine(
-    states=["user", "starburst", "meme", "help"],
+    states=["user", "starburstpolice", "starburst", "meme", "help", "wordmanage"],
     transitions=[
         {
             "trigger": "advance",
             "source": "user",
+            "dest": "starburstpolice",
+            "conditions": "is_going_to_starburstpolice",
+        },
+        {
+            "trigger": "exitstarburst",
+            "source": "starburstpolice",
+            "dest": "user",
+            "conditions": "exit_starburstpolice",
+        },
+        {
+            "trigger": "check",
+            "source": "starburstpolice",
             "dest": "starburst",
             "conditions": "is_going_to_starburst",
         },
+        {"trigger": "check_end", "source": "starburst", "dest": "starburstpolice"},
+        {"trigger": "manage_end", "source": "wordmanage", "dest": "user"},
         {
             "trigger": "advance",
             "source": "user",
@@ -31,10 +45,18 @@ machine = TocMachine(
         {
             "trigger": "advance",
             "source": "user",
+            "dest": "wordmanage",
+            "conditions": "is_going_to_wordmanage",
+        },
+        {
+            "trigger": "advance",
+            "source": "user",
             "dest": "help",
             "conditions": "is_going_to_help",
         },
-        {"trigger": "go_back", "source": ["starburst", "meme", "help"], "dest": "user"},
+        
+        {"trigger": "go_back", "source": ["meme", "help"], "dest": "user"},
+
     ],
     initial="user",
     auto_transitions=False,
