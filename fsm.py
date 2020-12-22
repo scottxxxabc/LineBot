@@ -14,10 +14,10 @@ class TocMachine(GraphMachine):
     def is_going_to_help(self, event):
         text = event.message.text
         return text.lower() == "help"
-        
+
     def on_enter_help(self, event):
         print("I'm entering state2")
-        help_message = '歡迎使用星爆大師~\n這是一個可以幫助你找出正在偷星爆的星爆仔的好東西~\n輸入 星爆警察 以開始你的思想審查\n'
+        help_message = "歡迎使用星爆大師~\n這是一個可以幫助你找出正在偷星爆的星爆仔的好東西~\n輸入 星爆警察 以開始你的思想審查\n"
         reply_token = event.reply_token
         send_text_message(reply_token, help_message)
         self.go_back()
