@@ -65,7 +65,7 @@ class TocMachine(GraphMachine):
             text = event.message.text
             if isinstance(event, PostbackEvent):
                 if event.postback.data == 'YES':
-                    send_button_message(event.source.user_id, starburst_img)
+                    send_button_message(event.source.user_id, self.starburst_img)
                 elif event.postback.data == 'NO':
                     send_text_message(event.source.user_id, '我對你感到很失望')
                 return
@@ -73,9 +73,9 @@ class TocMachine(GraphMachine):
                 self.go_back()
                 return
             elif text.lower() == '0':
-                send_button_message(event.source.user_id, starburst_img)
+                send_button_message(event.source.user_id, self.starburst_img)
                 return
-            elif int(text.lower())>=1 and int(text.lower())<=len(starburst_article):
+            elif int(text.lower())>=1 and int(text.lower())<=len(self.starburst_article):
                 with open(self.starburst_article[int(text.lower())-1],'r', encoding='UTF-8') as f:
                     send_text_message(event.source.user_id, f.read())
 
