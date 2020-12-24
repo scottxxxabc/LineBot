@@ -63,10 +63,7 @@ class TocMachine(GraphMachine):
 
         elif self.state == "meme":
             text = event.message.text
-            print("**********************************************")
-            print(event.type)
-            print(isinstance(event, PostbackEvent))
-            print("**********************************************")
+            
             if isinstance(event, PostbackEvent):
                 if event.postback.data == 'A&YES':
                     send_button_message(event.source.user_id, self.starburst_img)
@@ -83,6 +80,7 @@ class TocMachine(GraphMachine):
                 with open(self.starburst_article[int(text.lower())-1],'r', encoding='UTF-8') as f:
                     send_text_message(event.source.user_id, f.read())
                 return
+            send_text_message(event.source.user_id, 'FAQ')
 
 
     def add_to_list(self, str, event):

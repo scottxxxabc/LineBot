@@ -124,6 +124,9 @@ def webhook_handler():
 
     # if event is MessageEvent and message is TextMessage, then echo text
     for event in events:
+        if isinstance(event, PostbackEvent):
+            machine.test(event)
+            continue
         if not isinstance(event, MessageEvent):
             continue
         if not isinstance(event.message, TextMessage):
