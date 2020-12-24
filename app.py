@@ -139,8 +139,7 @@ def webhook_handler():
         
         machine.test(event)
         
-    machine.get_graph().draw("fsm.png", prog="dot", format="png")
-    return send_file("fsm.png", mimetype="image/png")
+    
     return "OK"
 
 
