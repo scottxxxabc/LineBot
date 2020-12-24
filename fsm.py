@@ -90,7 +90,9 @@ class TocMachine(GraphMachine):
                                     )
                                 ]
                             )
-                else:
+                        )
+                    )
+                elif event.postback.data == 'NO':
                     send_text_message(event.source.user_id, '我對你感到很失望')
                 return
             elif text.lower() == 'exit':
