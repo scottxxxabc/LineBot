@@ -55,7 +55,12 @@ machine = TocMachine(
             "dest": "help",
             "conditions": "is_going_to_help",
         },
-        
+        {
+            "trigger": "advance",
+            "source": "user",
+            "dest": "fsm",
+            "conditions": "is_going_to_fsm",
+        },
         {"trigger": "go_back", "source": ["meme", "help", "fsm"], "dest": "user"},
         {"trigger": "go_fsm", "source": "user", "dest": "fsm"},
 
@@ -145,8 +150,8 @@ def webhook_handler():
 
 @app.route("/show-fsm", methods=["GET"])
 def show_fsm():
-    machine.get_graph().draw("fsm.svg", prog="dot", format="svg")
-    return send_file("fsm.svg", mimetype="image/svg")
+    machine.get_graph().draw("./fsm.svg", prog="dot", format="svg")
+    return send_file("./fsm.svg", mimetype="image/svg")
 
 
 if __name__ == "__main__":
