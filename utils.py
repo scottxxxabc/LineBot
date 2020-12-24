@@ -21,6 +21,7 @@ def send_image_url(id, img_url):
                                 preview_image_url=img_url))
 
 def send_button_message(id, starburst_img):
+    line_bot_api = LineBotApi(channel_access_token)
     line_bot_api.push_message(id, TemplateSendMessage(
                             alt_text='星爆!',
                             template=ButtonsTemplate(
@@ -47,5 +48,4 @@ def send_button_message(id, starburst_img):
                             )
                         )
     )
-    pass
 
