@@ -62,16 +62,21 @@ class TocMachine(GraphMachine):
 
         elif self.state == "meme":
             text = event.message.text
-            if isinstance(event, PostbackEvent)
+            if isinstance(event, PostbackEvent):
                 if event.postback.data == 'YES':
                     send_button_message(
                         event.source.user_id,
                         TemplateSendMessage(
                             alt_text='星爆!',
                             template=ButtonsTemplate(
-                                thumbnailImageUrl=starburst_img[random.random(0, 193)]
-                                title='桐人星爆爆，魔眼閃耀耀'
+                                thumbnailImageUrl=starburst_img[random.random(0, 193)],
+                                title='桐人星爆爆，魔眼閃耀耀',
                                 text='想要更多星爆圖嗎?',
+                                defaultAction=PostbackTemplateAction(
+                                        label='I want more!',
+                                        text='I want more!',
+                                        data='YES'
+                                    ),
                                 actions=[
                                     PostbackTemplateAction(
                                         label='I want more!',
@@ -97,9 +102,14 @@ class TocMachine(GraphMachine):
                         TemplateSendMessage(
                             alt_text='星爆!',
                             template=ButtonsTemplate(
-                                thumbnailImageUrl=starburst_img[random.random(0, 193)]
-                                title='桐人星爆爆，魔眼閃耀耀'
+                                thumbnailImageUrl=starburst_img[random.random(0, 193)],
+                                title='桐人星爆爆，魔眼閃耀耀',
                                 text='想要更多星爆圖嗎?',
+                                defaultAction=PostbackTemplateAction(
+                                        label='I want more!',
+                                        text='I want more!',
+                                        data='YES'
+                                    ),
                                 actions=[
                                     PostbackTemplateAction(
                                         label='I want more!',
