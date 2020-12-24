@@ -237,12 +237,11 @@ class TocMachine(GraphMachine):
     def on_enter_meme(self, event):
 
         id = event.source.user_id
-        str = '您現在可以觀賞最棒的星爆圖及星爆文!\n\n輸入 0 觀賞星爆圖'
-        for index,a in enumerate(self.starburst_article) :
-            str = str + '\n輸入' + str(index + 1) + a
-
-        send_text_message(id, str)
-        self.go_back()
+        stri = '您現在可以觀賞最棒的星爆圖及星爆文!\n\n輸入 0 觀賞星爆圖'
+        for index, a in enumerate(self.starburst_article) :
+            stri = stri + '\n輸入' + str(index + 1) + a
+        stri = stri + "\n輸入 exit 離開"
+        send_text_message(id, stri)
 
     def is_going_to_fsm(self, event):
         text = event.message.text
