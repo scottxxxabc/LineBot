@@ -2,7 +2,7 @@ from transitions.extensions import GraphMachine
 
 from utils import send_text_message, send_image_url, send_button_message
 import os
-import random
+
 from linebot.models import PostbackEvent
 
 
