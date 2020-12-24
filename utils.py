@@ -27,24 +27,24 @@ def send_button_message(id, starburst_img):
     line_bot_api.push_message(id, TemplateSendMessage(
                             alt_text='星爆!',
                             template=ButtonsTemplate(
-                                thumbnailImageUrl=img,
                                 title='桐人星爆爆，魔眼閃耀耀',
                                 text='想要更多星爆圖嗎?',
+                                thumbnail_image_url=img
                                 defaultAction=PostbackTemplateAction(
                                         label='I want more!',
                                         text='I want more!',
-                                        data='YES'
+                                        data='A&YES'
                                     ),
                                 actions=[
                                     PostbackTemplateAction(
                                         label='I want more!',
                                         text='I want more!',
-                                        data='YES'
+                                        data='A&YES'
                                     ),
                                     PostbackTemplateAction(
                                         label='NO, PLEASE NO!',
                                         text='NO, PLEASE NO!',
-                                        data='NO'
+                                        data='A&NO'
                                     )
                                 ]
                             )
