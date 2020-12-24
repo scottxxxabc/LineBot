@@ -129,7 +129,7 @@ class TocMachine(GraphMachine):
                 )
                 return
             elif int(text.lower())>=1 and int(text.lower())<=len(starburst_article):
-                with open(starburst_article[int(text.lower())-1],'r', encoding='UTF-8') as f:
+                with open(self.starburst_article[int(text.lower())-1],'r', encoding='UTF-8') as f:
                     send_text_message(event.source.user_id, f.read())
 
 
