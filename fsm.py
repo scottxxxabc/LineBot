@@ -64,7 +64,8 @@ class TocMachine(GraphMachine):
         elif self.state == "meme":
             text = event.message.text
             print(event)
-            if event["type"] == 'postback':
+            if isinstance(event, PostbackEvent):
+                print("\nYAY\n")
                 if event.postback.data == 'A&YES':
                     send_button_message(event.source.user_id, self.starburst_img)
                 elif event.postback.data == 'A&NO':
