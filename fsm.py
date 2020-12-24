@@ -1,6 +1,6 @@
 from transitions.extensions import GraphMachine
 
-from utils import send_text_message, send_image_url
+from utils import send_text_message, send_image_url, send_button_message
 import os
 import random
 
@@ -20,7 +20,7 @@ class TocMachine(GraphMachine):
                 self.starburst_img.append(word.replace('\n', ''))
         allFileList = os.listdir('./article')
         for file in allFileList:
-            if os.path.isfile('./article' + file):
+            if os.path.isfile('./article/' + file):
                 self.starburst_article.append(file)
 
     def test(self, event):
@@ -64,34 +64,7 @@ class TocMachine(GraphMachine):
             text = event.message.text
             if isinstance(event, PostbackEvent):
                 if event.postback.data == 'YES':
-                    send_button_message(
-                        event.source.user_id,
-                        TemplateSendMessage(
-                            alt_text='星爆!',
-                            template=ButtonsTemplate(
-                                thumbnailImageUrl=starburst_img[random.random(0, 193)],
-                                title='桐人星爆爆，魔眼閃耀耀',
-                                text='想要更多星爆圖嗎?',
-                                defaultAction=PostbackTemplateAction(
-                                        label='I want more!',
-                                        text='I want more!',
-                                        data='YES'
-                                    ),
-                                actions=[
-                                    PostbackTemplateAction(
-                                        label='I want more!',
-                                        text='I want more!',
-                                        data='YES'
-                                    ),
-                                    PostbackTemplateAction(
-                                        label='NO, PLEASE NO!',
-                                        text='NO, PLEASE NO!',
-                                        data='NO'
-                                    )
-                                ]
-                            )
-                        )
-                    )
+                    send_button_message(event.source.user_id)
                 elif event.postback.data == 'NO':
                     send_text_message(event.source.user_id, '我對你感到很失望')
                 return
@@ -99,34 +72,7 @@ class TocMachine(GraphMachine):
                 self.go_back()
                 return
             elif text.lower() == '0':
-                send_button_message(
-                        event.source.user_id,
-                        TemplateSendMessage(
-                            alt_text='星爆!',
-                            template=ButtonsTemplate(
-                                thumbnailImageUrl=starburst_img[random.random(0, 193)],
-                                title='桐人星爆爆，魔眼閃耀耀',
-                                text='想要更多星爆圖嗎?',
-                                defaultAction=PostbackTemplateAction(
-                                        label='I want more!',
-                                        text='I want more!',
-                                        data='YES'
-                                    ),
-                                actions=[
-                                    PostbackTemplateAction(
-                                        label='I want more!',
-                                        text='I want more!',
-                                        data='YES'
-                                    ),
-                                    PostbackTemplateAction(
-                                        label='NO, PLEASE NO!',
-                                        text='NO, PLEASE NO!',
-                                        data='NO'
-                                    )
-                                ]
-                            )
-                        )
-                )
+                send_button_message(event.source.user_id)
                 return
             elif int(text.lower())>=1 and int(text.lower())<=len(starburst_article):
                 with open(self.starburst_article[int(text.lower())-1],'r', encoding='UTF-8') as f:

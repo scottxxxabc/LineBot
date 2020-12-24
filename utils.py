@@ -20,7 +20,32 @@ def send_image_url(id, img_url):
     line_bot_api.push_message(id, ImageSendMessage(original_content_url=img_url, \
                                 preview_image_url=img_url))
 
-def send_button_message(id, buttons):
-    line_bot_api.push_message(id, buttons)
+def send_button_message(id):
+    line_bot_api.push_message(id, TemplateSendMessage(
+                            alt_text='星爆!',
+                            template=ButtonsTemplate(
+                                thumbnailImageUrl=starburst_img[random.random(0, 193)],
+                                title='桐人星爆爆，魔眼閃耀耀',
+                                text='想要更多星爆圖嗎?',
+                                defaultAction=PostbackTemplateAction(
+                                        label='I want more!',
+                                        text='I want more!',
+                                        data='YES'
+                                    ),
+                                actions=[
+                                    PostbackTemplateAction(
+                                        label='I want more!',
+                                        text='I want more!',
+                                        data='YES'
+                                    ),
+                                    PostbackTemplateAction(
+                                        label='NO, PLEASE NO!',
+                                        text='NO, PLEASE NO!',
+                                        data='NO'
+                                    )
+                                ]
+                            )
+                        )
+    )
     pass
 
