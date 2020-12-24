@@ -71,6 +71,7 @@ class TocMachine(GraphMachine):
 
             text = event.message.text
             if text.lower() == 'exit':
+                send_text_message(event.source.user_id, "結束觀賞星爆圖")
                 self.go_back()
                 return
             elif text.lower() == '0':
@@ -202,7 +203,7 @@ class TocMachine(GraphMachine):
     def on_enter_fsm(self, event):
 
         id = event.source.user_id
-        send_text_message(id, "fsm")
+        send_image_url(id, 'https://i.imgur.com/uwmySIP.png')
         self.go_back() 
 
 
