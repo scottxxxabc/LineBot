@@ -1,19 +1,30 @@
 from transitions.extensions import GraphMachine
 
 from utils import send_text_message, send_image_url
+import os
+import random
+
 
 
 class TocMachine(GraphMachine):
     starburst_list = []
+    starburst_img = []
+    starburst_article = []
     def __init__(self, **machine_configs):
         self.machine = GraphMachine(model=self, **machine_configs)
         with open("starburstword.txt",'r', encoding='UTF-8') as f:
             for word in f:
                 self.starburst_list.append(word.replace('\n', ''))
-        print(self.starburst_list)
-
+        with open("img_url.txt",'r', encoding='UTF-8') as f:
+            for word in f:
+                self.starburst_img.append(word.replace('\n', ''))
+        allFileList = os.listdir('./article')
+        for file in allFileList:
+            if os.path.isfile('./article' + file):
+                self.starburst_article.append(file)
 
     def test(self, event):
+
         if self.state == "user":
             self.advance(event)
         elif self.state == "starburstpolice":
@@ -49,11 +60,77 @@ class TocMachine(GraphMachine):
             
             send_text_message(event.source.user_id, text + ' 不是正確的指令')
 
+        elif self.state == "meme":
+            text = event.message.text
+            if isinstance(event, PostbackEvent)
+                if event.postback.data == 'YES':
+                    send_button_message(
+                        event.source.user_id,
+                        TemplateSendMessage(
+                            alt_text='星爆!',
+                            template=ButtonsTemplate(
+                                thumbnailImageUrl=starburst_img[random.random(0, 193)]
+                                title='桐人星爆爆，魔眼閃耀耀'
+                                text='想要更多星爆圖嗎?',
+                                actions=[
+                                    PostbackTemplateAction(
+                                        label='I want more!',
+                                        text='I want more!',
+                                        data='YES'
+                                    ),
+                                    PostbackTemplateAction(
+                                        label='NO, PLEASE NO!',
+                                        text='NO, PLEASE NO!',
+                                        data='NO'
+                                    )
+                                ]
+                            )
+                else:
+                    send_text_message(event.source.user_id, '我對你感到很失望')
+                return
+            elif text.lower() == 'exit':
+                self.go_back()
+                return
+            elif text.lower() == '0':
+                send_button_message(
+                        event.source.user_id,
+                        TemplateSendMessage(
+                            alt_text='星爆!',
+                            template=ButtonsTemplate(
+                                thumbnailImageUrl=starburst_img[random.random(0, 193)]
+                                title='桐人星爆爆，魔眼閃耀耀'
+                                text='想要更多星爆圖嗎?',
+                                actions=[
+                                    PostbackTemplateAction(
+                                        label='I want more!',
+                                        text='I want more!',
+                                        data='YES'
+                                    ),
+                                    PostbackTemplateAction(
+                                        label='NO, PLEASE NO!',
+                                        text='NO, PLEASE NO!',
+                                        data='NO'
+                                    )
+                                ]
+                            )
+                return
+            elif int(text.lower())>=1 and int(text.lower())<=len(starburst_article):
+                with open(starburst_article[int(text.lower())-1],'r', encoding='UTF-8') as f:
+                    send_text_message(event.source.user_id, f.read())
+
+
+
     def add_to_list(self, str, event):
-        self.starburst_list.append(str)
-        with open("starburstword.txt",'a', encoding='UTF-8') as f:
-            f.write(str + '\n')
-        send_text_message(event.source.user_id, str + ' 已加入星爆關鍵字列表!')
+        if str in self.starburst_list:
+            send_text_message(event.source.user_id, str + ' 已在星爆關鍵字列表中!')
+
+        else:
+            self.starburst_list.append(str)
+            with open("starburstword.txt",'a', encoding='UTF-8') as f:
+                f.write(str + '\n')
+            send_text_message(event.source.user_id, str + ' 已加入星爆關鍵字列表!')
+
+
 
     def rm(self, str, event):
         if str in self.starburst_list:
@@ -146,11 +223,23 @@ class TocMachine(GraphMachine):
     def on_enter_meme(self, event):
 
         id = event.source.user_id
-        send_text_message(id, "meme")
+        str = '您現在可以觀賞最棒的星爆圖及星爆文!\n\n輸入 0 觀賞星爆圖'
+        for index,a in enumerate(self.starburst_article) :
+            str = str + '\n輸入' + str(index + 1) + a
+
+        send_text_message(id, str)
         self.go_back()
 
-    def on_exit_meme(self):
-        print("Leaving state2")
+    def is_going_to_fsm(self, event):
+        text = event.message.text
+        return text.lower() == "fsm"
+
+    def on_enter_fsm(self, event):
+
+        id = event.source.user_id
+        send_text_message(id, "fsm")
+        self.go_back() 
+
 
     def is_going_to_wordmanage(self, event):
         text = event.message.text

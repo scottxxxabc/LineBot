@@ -14,7 +14,7 @@ load_dotenv()
 
 
 machine = TocMachine(
-    states=["user", "starburstpolice", "starburst", "meme", "help", "wordmanage"],
+    states=["user", "starburstpolice", "starburst", "meme", "help", "wordmanage", "fsm"],
     transitions=[
         {
             "trigger": "advance",
@@ -56,7 +56,8 @@ machine = TocMachine(
             "conditions": "is_going_to_help",
         },
         
-        {"trigger": "go_back", "source": ["meme", "help"], "dest": "user"},
+        {"trigger": "go_back", "source": ["meme", "help", "fsm"], "dest": "user"},
+        {"trigger": "go_fsm", "source": "user", "dest": "fsm"},
 
     ],
     initial="user",
