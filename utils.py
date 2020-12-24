@@ -22,10 +22,12 @@ def send_image_url(id, img_url):
 
 def send_button_message(id, starburst_img):
     line_bot_api = LineBotApi(channel_access_token)
+    img = starburst_img[random.randrange(0, 193)]
+    send_image_url(id, img)
     line_bot_api.push_message(id, TemplateSendMessage(
                             alt_text='星爆!',
                             template=ButtonsTemplate(
-                                thumbnailImageUrl=starburst_img[random.randrange(0, 193)],
+                                thumbnailImageUrl=img,
                                 title='桐人星爆爆，魔眼閃耀耀',
                                 text='想要更多星爆圖嗎?',
                                 defaultAction=PostbackTemplateAction(
