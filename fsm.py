@@ -68,7 +68,7 @@ class TocMachine(GraphMachine):
                 elif event.postback.data == 'A&NO':
                     send_text_message(event.source.user_id, '我對你感到很失望')
                 return
-                
+
             text = event.message.text
             if text.lower() == 'exit':
                 self.go_back()
@@ -77,7 +77,7 @@ class TocMachine(GraphMachine):
                 send_button_message(event.source.user_id, self.starburst_img)
                 return
             elif int(text.lower()) >= 1 and int(text.lower()) <= len(self.starburst_article):
-                with open(self.starburst_article[int(text.lower())-1],'r', encoding='UTF-8') as f:
+                with open('./article/' + self.starburst_article[int(text.lower())-1],'r', encoding='UTF-8') as f:
                     send_text_message(event.source.user_id, f.read())
                 return
             send_text_message(event.source.user_id, 'FAQ')
@@ -188,9 +188,12 @@ class TocMachine(GraphMachine):
         id = event.source.user_id
         stri = '您現在可以觀賞最棒的星爆圖及星爆文!\n\n輸入 0 觀賞星爆圖'
         for index, a in enumerate(self.starburst_article) :
-            stri = stri + '\n輸入' + str(index + 1) + " " + a[:a.find('.')]
+            stri = stri + '\n輸入 ' + str(index + 1) + " " + a[:a.find('.')]
         stri = stri + "\n輸入 exit 離開"
         send_text_message(id, stri)
+    
+    def on_exist_meme(self, event):
+        send_text_message(event.source.user_id, "結束觀賞星爆圖")
 
     def is_going_to_fsm(self, event):
         text = event.message.text
