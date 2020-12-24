@@ -62,15 +62,15 @@ class TocMachine(GraphMachine):
             send_text_message(event.source.user_id, text + ' 不是正確的指令')
 
         elif self.state == "meme":
-            text = event.message.text
-            
             if isinstance(event, PostbackEvent):
                 if event.postback.data == 'A&YES':
                     send_button_message(event.source.user_id, self.starburst_img)
                 elif event.postback.data == 'A&NO':
                     send_text_message(event.source.user_id, '我對你感到很失望')
                 return
-            elif text.lower() == 'exit':
+                
+            text = event.message.text
+            if text.lower() == 'exit':
                 self.go_back()
                 return
             elif text.lower() == '0':
