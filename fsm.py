@@ -3,6 +3,7 @@ from transitions.extensions import GraphMachine
 from utils import send_text_message, send_image_url, send_button_message
 import os
 import random
+from linebot.models import PostbackEvent
 
 
 
@@ -64,7 +65,7 @@ class TocMachine(GraphMachine):
             text = event.message.text
             if isinstance(event, PostbackEvent):
                 if event.postback.data == 'YES':
-                    send_button_message(event.source.user_id)
+                    send_button_message(event.source.user_id, starburst_img)
                 elif event.postback.data == 'NO':
                     send_text_message(event.source.user_id, '我對你感到很失望')
                 return
@@ -72,7 +73,7 @@ class TocMachine(GraphMachine):
                 self.go_back()
                 return
             elif text.lower() == '0':
-                send_button_message(event.source.user_id)
+                send_button_message(event.source.user_id, starburst_img)
                 return
             elif int(text.lower())>=1 and int(text.lower())<=len(starburst_article):
                 with open(self.starburst_article[int(text.lower())-1],'r', encoding='UTF-8') as f:
@@ -185,7 +186,7 @@ class TocMachine(GraphMachine):
         id = event.source.user_id
         stri = '您現在可以觀賞最棒的星爆圖及星爆文!\n\n輸入 0 觀賞星爆圖'
         for index, a in enumerate(self.starburst_article) :
-            stri = stri + '\n輸入' + str(index + 1) + a
+            stri = stri + '\n輸入' + str(index + 1) + " " + a[:a.find('.')]
         stri = stri + "\n輸入 exit 離開"
         send_text_message(id, stri)
 
